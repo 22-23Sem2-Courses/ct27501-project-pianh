@@ -11,7 +11,7 @@
         // var_dump($sanpham);
         // die;
 		if ($sanpham->validate()) {
-			$sanpham->save() && redirect(BASE_URL_PATH .'backend/sanpham/' );
+			$sanpham->save() && redirect(BASE_URL_PATH .'backend/sanpham/index.php' );
 		} 
 		$errors = $sanpham->getValidationErrors();
 		}
@@ -20,26 +20,25 @@
 <html lang="en">
 
 <head>
-    <?php include_once __DIR__ . '/../layouts/meta.php'; ?>
-
+    <?php include_once __DIR__ . '../../layouts/meta.php'; ?>
 	<title>Thêm mới sản phẩm</title>
-
-	<?php include_once __DIR__ . '/../layouts/styles.php'?>
+	<?php include_once __DIR__ . '../../layouts/styles.php'; ?>
 </head>
 
 <body>
-    <?php include_once __DIR__ . '/../layouts/partials/header.php' ?>
+    <?php include_once __DIR__ . '../../../../partialsBE/header.php'; ?>
     <?php
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);     
     ?>
-    <div class="container-fluid pb-450 ">
+
+    <div class="container-fluid">
         <div class="row">
-            <?php include_once __DIR__ . '/../layouts/partials/sidebar.php' ?>
+            <?php include_once __DIR__ . '../../../../partialsBE/sidebar.php'; ?>
             
             <form name="frmCreate" id="frmCreate" action=""  method="post" class="col-md-10 justify-content-center">
-                <h2 class="text-center">Thêm mới sản phẩm</h2>
+                <h2 class="text-center mt-3 wow fadeIn" data-wow-delay="0.05s">Thêm mới sản phẩm</h2>
                     <!-- Tên sản phẩm -->
                     <div class="form-group<?= isset($errors['sp_ten']) ? ' has-error' : '' ?>">
                         <label for="name">Tên sản phẩm</label>
@@ -237,26 +236,21 @@
 
                     </div>
 
-                    
-
                     <!-- Submit -->
-                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Lưu dữ liệu</button>
+                    <button type="submit" name="submit" id="submit" class="btn btn-primary mt-3">Thêm mới sản phẩm</button>
                 </form>
     
         </div>
     </div>
                 
-
-	
-
-	<?php include_once __DIR__ . '/../layouts/partials/footer.php' ?>
-    <?php include_once __DIR__ . '/../layouts/scripts.php' ?>
-	<!-- <script src="<?= BASE_URL_PATH . "js/wow.min.js" ?>"></script> -->
+    <?php include_once __DIR__ . '../../../../partialsBE/footer.php'; ?>
+    <?php include_once __DIR__ . '../../layouts/scripts.php'; ?>
 	<script>
-		// $(document).ready(function() {
-		// 	new WOW().init();
-		// });
-	</script>
+        $(document).ready(function() {
+            //Gọi wow js
+            new WOW().init();
+        });    
+    </script>
 </body>
 
 </html>

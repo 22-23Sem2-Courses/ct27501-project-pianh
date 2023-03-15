@@ -26,24 +26,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include_once __DIR__ . '/../layouts/meta.php'; ?>
 
+    <?php include_once __DIR__ . '../../layouts/meta.php'; ?>
     <title>Cập nhật sản phẩm</title>
-
-
-    <?php include_once __DIR__ . '/../layouts/styles.php'?>
-
+    <?php include_once __DIR__ . '../../layouts/styles.php'; ?>
+    
 </head>
 <body>
-    <?php include_once __DIR__ . '/../layouts/partials/header.php' ?>
-    
-    <div class="container-fluid pb-450">
-        <div class="row">
-            <?php include_once __DIR__ . '/../layouts/partials/sidebar.php' ?>
+    <?php include_once __DIR__ . '../../../../partialsBE/header.php'; ?>
+    <?php
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);     
+    ?>
 
-           
-            <form name="frmCreate" id="frmCreate" action=""  method="post" class="col-md-10 justify-content-center">
-                <h2 class="text-center">Cập nhật sản phẩm</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <?php include_once __DIR__ . '../../../../partialsBE/sidebar.php'; ?>
+
+            <form name="frmEdit" id="frmEdit" action=""  method="post" class="col-md-10 justify-content-center">
+                <h2 class="text-center mt-3 wow fadeIn" data-wow-delay="0.05s">Cập nhật sản phẩm</h2>
 
                 <input type="hidden" name="sp_ma" value="<?= htmlspecialchars($sanpham->getSp_ma()) ?>">
                     <!-- Tên sản phẩm -->
@@ -243,68 +245,19 @@
 
                     </div>
 
-                    
-
                     <!-- Submit -->
-                    <button type="submit" name="submit" id="submit" class="btn btn-primary">Cập nhật sản phẩm</button>
+                    <button type="submit" name="submit" id="submit" class="btn btn-primary mt-3">Cập nhật sản phẩm</button>
                 </form>
-
-        
         </div>
     </div>
 
-    
-
-    <?php include_once __DIR__ . '/../layouts/partials/footer.php' ?>
-    <?php include_once __DIR__ . '/../layouts/scripts.php' ?>
-       <!-- SweetAlert -->
+    <?php include_once __DIR__ . '../../../../partialsBE/footer.php'; ?>
+    <?php include_once __DIR__ . '../../layouts/scripts.php'; ?>
     <script>
-   $(document).ready(function() {
-            // Yêu cầu DataTable quản lý datatable #tblKhachhang
-
-            $('#tblSanpham').DataTable({
-                dom: 'Blfrtip',
-                "bProcessing": true,
-                "bAutoWidth": false,
-                "responsive": true,
-                "buttons": [
-                    'copy', 'excel', 'csv', 'pdf'
-                ]
-            });
-
-            // Cảnh báo khi xóa
-            // 1. Đăng ký sự kiện click cho các phần tử (element) đang áp dụng class .btnDelete
-            $('.btnDelete').click(function() {
-                // Click hanlder
-                // 2. Sử dụng thư viện SweetAlert để hiện cảnh báo khi bấm nút xóa
-                swal({
-                        title: "Bạn có chắc chắn muốn xóa?",
-                        text: "Một khi đã xóa, không thể phục hồi....",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) { // Nếu đồng ý xóa
-
-                            // 3. Lấy giá trị của thuộc tính (custom attribute HTML) 'dh_ma'
-                            // var dh_ma = $(this).attr('data-dh_ma');
-                            var sp_ma = $(this).data('sp_ma');
-                            var url = "delete.php?sp_ma=" + sp_ma;
-
-                            // Điều hướng qua trang xóa với REQUEST GET, có tham số km_ma=...
-                            location.href = url;
-                        } else { // Nếu không đồng ý xóa
-                            swal("Cẩn thận hơn nhé!");
-                        }
-                    });
-
-            });
+        $(document).ready(function() {
+            // Gọi wow js
+            new WOW().init();
         });
-      
-  
-   
-    
     </script>
 </body>
 </html>
