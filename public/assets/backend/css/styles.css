@@ -1,37 +1,54 @@
-/* no reset css */
-
-
-
-/* padding */
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: -70px;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+  }
+  
+  /* Custom page CSS
+  -------------------------------------------------- */
+  /* Not required for template or sticky footer method. */
+  .container-fluid {
+    margin: 5px 0;
+    min-height: 100%;
+  }
+/* End Sticky footer styles  */
+  
+/* Css All page */
 .button {
     height: 80px;
     width: 100px;
     margin-left: 400px;
 }
 
-.pb-100 {
-    padding-bottom: 100px;
-}
-.pb-150 {
-    padding-bottom: 150px;
+.btnEdit {
+    color: var(--white-color);
 }
 
-.pb-450 {
-    padding-bottom: 450px;
+
+
+.btnEdit:hover {
+    color: var(--white-color);
+    /* background-color: #ec971f; */
+    background-color: var(--light-orange-color);
+    border-color: var(--light-orange-color);
 }
 
-.pb-500 {
-    padding-bottom: 500px;
-}
-
-/* end padding */
-
-/* background */
 .background-primary {
-    background-color: rgb(255,103,0);
+    background-color: var(--primary-color);
 }
 
-/* sidebar */
+/* End All page */
+
+/* Sidebar */
 .sidebar_heading {
     padding-bottom: 5px; 
     font-size: 1.1rem;
@@ -69,8 +86,6 @@
 .titlehomepage-header {
     font-size: 18px;
 }
-
-
 
 .username-login {
     font-size: 17px;
@@ -309,6 +324,7 @@
 
 /* end register */
 
-/* Data Tables */
 
-/* End Data Tables */
+
+
+
