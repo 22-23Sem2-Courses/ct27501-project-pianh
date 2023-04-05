@@ -1,4 +1,3 @@
-
 <?php
     
     require_once __DIR__ . '../../../../vendor/autoload.php';
@@ -62,12 +61,12 @@
             <div class="col-md-8 col-sm-8 main-column">
 
                 <div class="grid-members row rounded">
-                <?php
 
-                if (isset($_SESSION['kh_tendangnhap_logged']) && !empty($_SESSION['kh_tendangnhap_logged'])) :
-                ?>
-                    <h2>Bạn đã đăng nhập rồi. <a href="/admin/pages/dashboard.php">Bấm vào đây để quay về trang chủ.</a></h2>
-                <?php else : ?>
+                <?php
+                    if (isset($_SESSION['kh_tendangnhap_logged']) && !empty($_SESSION['kh_tendangnhap_logged'])) :
+                    ?>
+                        <h2>Bạn đã đăng nhập rồi. <a href="/admin/pages/dashboard.php">Bấm vào đây để quay về trang chủ.</a></h2>
+                    <?php else : ?>
 
                     <!-- left -->
                     <div class="grid-item col-md-6 " style="background-color: #eee; padding:0;">
@@ -117,7 +116,7 @@
                                     <input type="checkbox" id="remember-me" class="ml-3">
                                     <label for="remember-me" >Ghi nhớ tôi</label> 
                                 </div>
-                                <a href="https://didongthongminh.vn/quen-mat-khau" title="Quên mật khẩu?" class="forgot-password mr-3">
+                                <a href="#" title="Quên mật khẩu?" class="forgot-password mr-3">
                                 Quên mật khẩu?
                                 </a>
                             </div>
@@ -137,10 +136,8 @@
                                 <!-- <a  class="submitLogin submit-btn" name="btnLogin" id="btnLogin" >Đăng nhập</a> -->
                             </div>
                         </form>
+
                         <?php
-
-
-
                             // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
                             if (isset($_POST['btnLogin']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
                                 if (
@@ -172,8 +169,6 @@
 
                             }
                             $_SESSION['phrase'] = $builder->getPhrase();
-
-
                         ?>
 
                         <div class="wrapper">
@@ -193,10 +188,7 @@
             <div class="col-md-2"></div>
         </div>
 
-        <?php
-
-                    
-     
+                <?php
                     endif;
                 ?>
     

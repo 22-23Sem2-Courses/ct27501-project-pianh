@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="../../assets/admin/css/bootstrap.min.css" type="text/css" />
     <!-- Font awesome -->
     <link rel="stylesheet" href="../../assets/admin/css/font-awesome.min.css" type="text/css" />
+    <!-- Chart JS -->
+    <link rel="stylesheet" href="../../assets/admin/css/Chart.min.css" type="text/css" />
     <!-- Datatables CSS -->
     <link href="../../assets/admin/css/datatables.min.css" rel="stylesheet"/>
     <!-- Animate CSS -->
@@ -194,7 +196,7 @@
     <script src="../../assets/admin/js/vfs_fonts.js"></script>
     <!-- Custom JS -->
     <script src="../../assets/admin/js/app.js"></script>
-    <?php //include_once __DIR__ . 'http://http://dientucantho.localhost/dientucantho.vn/src/api/apicall/product.php' ?>
+    
     <script>
         $(function() {
             $('#btnRefeshProductQuantity').click(function() {

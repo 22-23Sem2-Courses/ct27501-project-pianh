@@ -55,6 +55,12 @@
 </head>
 
 <body>
+    
+    <?php
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);     
+    ?>
     <!-- header -->
     <?php include_once __DIR__ . '../../../../partials/admin/header.php'; ?>
     <!-- end header -->
@@ -70,6 +76,7 @@
                     ?>
                     <h2>Bạn đã đăng nhập rồi. <a href="/admin/pages/dashboard.php">Bấm vào đây để quay về trang chủ.</a></h2>
                 <?php else : ?>
+
                     <!-- left -->
                     <div class="grid-item col-md-6 " style="background-color: #eee; padding:0;">
                         <img src="../../assets/admin/imgs/log.svg" alt="" class="img-responsive">
@@ -179,14 +186,7 @@
                             </div>
                         </form>
 
-                        <?php
-                            
                         
-
-                            
-
-                        endif;
-                        ?>
 
                         <div class="wrapper">
                             <span></span>
@@ -197,12 +197,18 @@
                         <a href="" class="login-facebook login-social"><i class="fa fa-facebook-square" aria-hidden="true"></i>  Facebook</a>
                     </div>
                     <!-- end right border border-info-->
+                    
+                    <?php
+                        // Kết thúc check Section đã đăng nhập hay chưa
+                        endif;
+                    ?>
+
                 </div>
             </div>
             <div class="col-md-2"></div>
         </div>
 
-
+        
         
 
     

@@ -20,17 +20,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách sản phẩm</title>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../assets/admin/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/bootstrap.min.css" ?>" type="text/css" />
     <!-- Font awesome -->
-    <link rel="stylesheet" href="../../assets/admin/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/font-awesome.min.css" ?>" type="text/css" />
     <!-- Datatables CSS -->
-    <link href="../../assets/admin/css/datatables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/datatables.min.css" ?>" type="text/css" />
     <!-- Animate CSS -->
-    <link href="../../assets/admin/css/animate.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/animate.css" ?>" type="text/css" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../../assets/admin/css/base.css" type="text/css" />
-    <link rel="stylesheet" href="../../assets/admin/css/styles.css" type="text/css" />
-    <link rel="stylesheet" href="../../assets/admin/css/responsive.css" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/base.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/styles.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/responsive.css" ?>" type="text/css" />
 
 </head>
 <body>
@@ -139,28 +139,37 @@
 
     <?php include_once __DIR__ . '../../../../partials/admin/footer.php'; ?>
     <!-- jQuery JS -->
-    <script src="../../assets/admin/js/jquery.min.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/jquery.min.js" ?>"></script> 
     <!-- Bootstrap JS -->
-    <script src="../../assets/admin/js/bootstrap.min.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/bootstrap.min.js" ?>"></script>
     <!-- Wow js -->
-    <script src="../../assets/admin/js/wow.min.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/wow.min.js" ?>"></script>
     <!-- SweetAlert JS-->
-    <script src="../../assets/admin/js/sweetalert.js"></script>
-    <script src="../../assets/admin/js/sweetalert.min.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.js" ?>"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.min.js" ?>"></script>
     <!-- Chart JS-->
-    <script src="../../assets/admin/js/chart.min.js"></script>
-    <!-- DataTable JS -->
-    <script src="../../assets/admin/js/datatables.min.js"></script>
-    <script src="../../assets/admin/js/buttons.bootstrap4.min.js"></script>
-    <script src="../../assets/admin/js/pdfmake.min.js"></script>
-    <script src="../../assets/admin/js/vfs_fonts.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/chart.min.js" ?>"></script>
+    <!-- DataTable JS -->   
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/datatables.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/buttons.bootstrap4.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/pdfmake.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/vfs_fonts.js" ?>"></script>
     <!-- Custom JS -->
-    <script src="../../assets/admin/js/app.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/app.js" ?>"></script>
 
     <script>
         $(document).ready(function() {
-            // Yêu cầu DataTable quản lý datatable #tblProducts
-            $('#tblProducts').DataTable({
+            //Gọi wow js
+            new WOW().init();
+
+            //Header toggle-mobile click
+            $('#header__toggle-mobile').click(function() {
+                // alert('ok');
+                $('.header__content').slideToggle();
+            })
+            
+           // Yêu cầu DataTable quản lý datatable #tblProducts
+           $('#tblProducts').DataTable({
                 dom: 'Blfrtip',
                 "bProcessing": true,
                 "bAutoWidth": false,

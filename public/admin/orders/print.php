@@ -43,14 +43,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>In đơn đặt hàng</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="../../assets/admin/css/bootstrap.min.css" type="text/css" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/bootstrap.min.css" ?>" type="text/css" />
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/font-awesome.min.css" ?>" type="text/css" />
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/datatables.min.css" ?>" type="text/css" />
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/animate.css" ?>" type="text/css" />
     <!-- Papper CSS -->
-    <link href="../../assets/admin/css/paper.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/paper.css" ?>" type="text/css" />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../../assets/admin/css/base.css" type="text/css" />
-    <link rel="stylesheet" href="../../assets/admin/css/styles.css" type="text/css" />
-    <link rel="stylesheet" href="../../assets/admin/css/responsive.css" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/base.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/styles.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/responsive.css" ?>" type="text/css" />
     
     <!-- Định khổ giấy: A5, A4 or A3 -->
     <style>
@@ -168,8 +174,24 @@
             </tbody>
         </table>
     </section>
+    <!-- jQuery JS -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/jquery.min.js" ?>"></script>
     <!-- Bootstrap JS -->
-    <script src="../../assets/admin/js/bootstrap.min.js"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/bootstrap.min.js" ?>"></script>
+    <!-- Wow js -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/wow.min.js" ?>"></script>
+    <!-- SweetAlert JS-->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.js" ?>"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.min.js" ?>"></script>
+    <!-- Chart JS-->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/chart.min.js" ?>"></script>
+    <!-- DataTable JS -->   
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/datatables.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/buttons.bootstrap4.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/pdfmake.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/vfs_fonts.js" ?>"></script>
+    <!-- Custom JS -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/app.js" ?>"></script>
   
 </body>
 

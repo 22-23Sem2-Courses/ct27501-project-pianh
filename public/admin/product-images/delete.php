@@ -47,9 +47,23 @@
 <html lang="en">
 <head>
 
-    <?php include_once __DIR__ . '../../layouts/meta.php'; ?>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xóa hình ảnh sản phẩm</title>
-    <?php include_once __DIR__ . '../../layouts/styles.php'; ?>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/bootstrap.min.css" ?>" type="text/css" />
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/font-awesome.min.css" ?>" type="text/css" />
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/datatables.min.css" ?>" type="text/css" />
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/animate.css" ?>" type="text/css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/base.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/styles.css" ?>" type="text/css" />
+    <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/responsive.css" ?>" type="text/css" />
 
 </head>
 <body>
@@ -124,7 +138,38 @@
     </div>
 
     <?php include_once __DIR__ . '../../../../partials/admin/footer.php'; ?>
-    <?php include_once __DIR__ . '../../layouts/scripts.php'; ?>
+    <!-- jQuery JS -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/jquery.min.js" ?>"></script>
+    <!-- Bootstrap JS -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/bootstrap.min.js" ?>"></script>
+    <!-- Wow js -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/wow.min.js" ?>"></script>
+    <!-- SweetAlert JS-->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.js" ?>"></script>
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.min.js" ?>"></script>
+    <!-- Chart JS-->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/chart.min.js" ?>"></script>
+    <!-- DataTable JS -->   
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/datatables.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/buttons.bootstrap4.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/pdfmake.min.js" ?>"></script>
+   <script src="<?= BASE_URL_PATH . "assets/admin/js/vfs_fonts.js" ?>"></script>
+    <!-- Custom JS -->
+    <script src="<?= BASE_URL_PATH . "assets/admin/js/app.js" ?>"></script>
+
+    <script>
+        $(document).ready(function() {
+            //Gọi wow js
+            new WOW().init();
+
+            //Header toggle-mobile click
+            $('#header__toggle-mobile').click(function() {
+                // alert('ok');
+                $('.header__content').slideToggle();
+            })
+            
+        });
+    </script>
 
 </body>
 </html>
