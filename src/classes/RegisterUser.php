@@ -6,7 +6,7 @@ class RegisterUser
 {
 	private $db;
 
-	public $kh_tendangnhap="";
+	public $kh_tendangnhap;
 	public $kh_matkhau;
 	public $kh_nhaplaimatkhau;
 	public $kh_ten;
@@ -30,9 +30,7 @@ class RegisterUser
 		if (isset($data['kh_tendangnhap'])) {
 			$this->kh_tendangnhap = trim($data['kh_tendangnhap']);
 		}
-        if (isset($data['kh_matkhau'])) {
-			$this->kh_matkhau = trim($data['kh_matkhau']);
-		}
+        
 
 		if (isset($data['kh_ten'])) {
 			$this->kh_ten = trim($data['kh_ten']);
@@ -124,5 +122,30 @@ class RegisterUser
 			
 		return $result;
 	}
+
+	public function checkRegister($kh_tendangnhap)
+	{
+		$result = false;
+		$statement = $this->db->prepare('SELECT * FROM khachhang WHERE (kh_tendangnhap = :kh_tendangnhap) LIMIT 1');
+		$statement->execute([
+            'kh_tendangnhap' => $kh_tendangnhap,
+        ]);
+
+		if ($row = $statement->fetch()) {
+			$this->fillFromCheckRegister($row);
+			$result = true;
+			return $result;
+		} 
+		return $result;
+	} 
+
+	protected function fillFromCheckRegister(array $row)
+	{
+		[
+			'kh_tendangnhap' => $this->kh_tendangnhap,
+		] = $row;
+		return $this;
+	}
+
 
 }

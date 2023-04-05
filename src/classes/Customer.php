@@ -109,7 +109,7 @@ class Customer
 		}
 
         if ( (($this->kh_gioitinh) != 0) && (($this->kh_gioitinh) != 1) ) {
-			$this->errors['kh_gioitinh'] = 'Trạng thái không hợp lệ.';
+			$this->errors['kh_gioitinh'] = 'Giới tính không hợp lệ.';
 		}
 
 		if (strlen($this->kh_dienthoai) < 10 || strlen($this->kh_dienthoai) > 12) {
@@ -126,6 +126,22 @@ class Customer
 
         if ( (($this->kh_trangthai) != 0) &&  (($this->kh_trangthai) != 1) ) {
 			$this->errors['kh_trangthai'] = 'Trạng thái không hợp lệ.';
+		}
+
+		if ( (($this->kh_ngaysinh) >31) ) {
+			$this->errors['kh_ngaysinh'] = 'Ngày sinh không hợp lệ.';
+		}
+
+		if ( (($this->kh_thangsinh) >12) ) {
+			$this->errors['kh_thangsinh'] = 'Tháng sinh không hợp lệ.';
+		}
+
+		if ( (($this->kh_thangsinh) ==2) && (($this->kh_ngaysinh) >30) ) {
+			$this->errors['kh_ngaysinh'] = 'Ngày sinh không hợp lệ.';
+		}
+
+		if ( (($this->kh_namsinh) > 2015) ) {
+			$this->errors['kh_namsinh'] = 'Xin lỗi bạn chưa đủ tuổi.';
 		}
 
         if ( (($this->kh_quanly) != 0) &&  (($this->kh_quanly) != 1) ) {
@@ -293,7 +309,7 @@ class Customer
 		return $result;
 	}
 
-	public function insertCustomerClient()
+	public function insertCustomeruser()
 	{
 		$result = false;
 		
@@ -345,9 +361,36 @@ class Customer
 		return $statement->execute(['kh_tendangnhap' => $this->kh_tendangnhap]);
 	}
 
+	// public function checkLogin($kh_tendangnhap, $kh_matkhau)
+	// {
+	// 	$statement = $this->db->prepare('SELECT * FROM khachhang WHERE (kh_tendangnhap = :kh_tendangnhap AND kh_matkhau = :kh_matkhau) LIMIT 1');
+	// 	$statement->execute([
+    //         'kh_tendangnhap' => $kh_tendangnhap,
+    //         'kh_matkhau' => $kh_matkhau
+    //     ]);
+
+	// 	if ($row = $statement->fetch()) {
+	// 		$this->fillFromCheckLogin($row);
+	// 		return $this;
+	// 	} 
+	// 	return null;
+	// } 
+
+	// protected function fillFromCheckLogin(array $row)
+	// {
+	// 	[
+	// 		'kh_tendangnhap' => $this->kh_tendangnhap,
+	// 		'kh_matkhau' => $this->kh_matkhau
+	// 	] = $row;
+	// 	return $this;
+	// }
+
+
+
 	public function checkLogin($kh_tendangnhap, $kh_matkhau)
 	{
-		$statement = $this->db->prepare('SELECT * FROM khachhang WHERE (kh_tendangnhap = :kh_tendangnhap AND kh_matkhau = :kh_matkhau)');
+		$result = false;
+		$statement = $this->db->prepare('SELECT * FROM khachhang WHERE (kh_tendangnhap = :kh_tendangnhap AND kh_matkhau = :kh_matkhau) LIMIT 1');
 		$statement->execute([
             'kh_tendangnhap' => $kh_tendangnhap,
             'kh_matkhau' => $kh_matkhau
@@ -355,9 +398,10 @@ class Customer
 
 		if ($row = $statement->fetch()) {
 			$this->fillFromCheckLogin($row);
-			return $this;
+			$result = true;
+			return $result;
 		} 
-		return null;
+		return $result;
 	} 
 
 	protected function fillFromCheckLogin(array $row)
@@ -368,4 +412,12 @@ class Customer
 		] = $row;
 		return $this;
 	}
+
+
+
+
+
+	
+
+
 }

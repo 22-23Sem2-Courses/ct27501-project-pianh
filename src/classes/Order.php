@@ -15,6 +15,7 @@ class Order
 	public $dh_thoigiantao;
 	public $dh_thoigiancapnhat;
 
+	public $sp_ma; //join sanpham
 	public $sp_ten; //join sanpham
 	public $sp_lsp; //join sanpham
 	public $sp_nsx; //join sanpham
@@ -58,17 +59,17 @@ class Order
 			$this->kh_tendangnhap = trim($data['kh_tendangnhap']);
 		}
 
-		if (isset($data['sp_ma'])) {
-			$this->arr_sp_ma = ($data['sp_ma']);
-		}
+		// if (isset($data['sp_ma'])) {
+		// 	$this->arr_sp_ma = ($data['sp_ma']);
+		// }
 
-		if (isset($data['sp_dh_soluong'])) {
-			$this->arr_sp_dh_soluong = ($data['sp_dh_soluong']);
-		}
+		// if (isset($data['sp_dh_soluong'])) {
+		// 	$this->arr_sp_dh_soluong = ($data['sp_dh_soluong']);
+		// }
 
-		if (isset($data['sp_dh_dongia'])) {
-			$this->arr_sp_dh_dongia = ($data['sp_dh_dongia']);
-		}
+		// if (isset($data['sp_dh_dongia'])) {
+		// 	$this->arr_sp_dh_dongia = ($data['sp_dh_dongia']);
+		// }
 
 	
 		return $this;
