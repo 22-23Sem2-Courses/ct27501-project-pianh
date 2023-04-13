@@ -5,21 +5,16 @@
     }
     require_once '../../../bootstrap.php';
 
-
-
-    use DientuCT\Project\RegisterUser;
+    use DientuCT\Project\RegisterUser;     
     $errors = [];
   
-
     // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
     if (isset($_POST['submitRegister']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
         $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);
         $customer = new RegisterUser($PDO);
         $customer->fill($_POST);
-        // var_dump($customer);
-        // die;
-        // var_dump($_POST);
-        // die;
+        // var_dump($customer);// die;
+        // var_dump($_POST);die;
 
         $customerCheck = $customer->checkRegister($kh_tendangnhap);
         
