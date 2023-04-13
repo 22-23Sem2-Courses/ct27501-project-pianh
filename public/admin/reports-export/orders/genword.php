@@ -17,13 +17,14 @@
         echo "<script type='text/javascript'>alert('$message');</script>";
         echo '<script>location.href = "/index.php";</script>';
     }
+
     // Creating the new document...
     $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
     //Lấy dữ liệu
-    use DientuCT\Project\Product;
-    $product = new Product($PDO);
-    $products = $product->viewProducts();
+    use DientuCT\Project\Order;
+    $order = new Order($PDO);
+    $orders = $order->viewOrders();
 
     /* Note: any element you append to a document must reside inside of a Section. */
 
@@ -31,19 +32,15 @@
     $section = $phpWord->addSection();
     // Adding Text element to the Section having font styled by default...
     $section->addText(
-        'Danh sách sản phẩm',
+        'Danh sách đơn đặt hàng',
         array('name' => 'Times New Roman', 'size' => 14, 'align'=>'center', 'bold' => true, )
     );
 
-    foreach($products as $product) {
+    foreach($orders as $order) {
         $section->addText(
-            'Mã sản phẩm: ' . htmlspecialchars($product->sp_ma) 
-            // . ' - Giới tính: ' .$khachhang['kh_gioitinh']
-            . ' - Tên sản phẩm: ' .htmlspecialchars($product->sp_ten)
-            . ' - Giá: ' .htmlspecialchars($product->sp_gia)
-            . ' - Số lượng: ' .htmlspecialchars($product->sp_soluong)
-            . ' - Loại sản phẩm: ' .htmlspecialchars($product->sp_lsp)
-            . ' - Nhà sản xuất: ' .htmlspecialchars($product->sp_nsx),
+            'Mã đơn: ' . htmlspecialchars($order->dh_ma) 
+            . ' - Ngày lập đơn: ' .htmlspecialchars($order->dh_thoigiantao)
+            . ' - Khách hàng: ' .htmlspecialchars($order->kh_tendangnhap),
             array('name' => 'Times New Roman', 'size' => 10)
         );
     }
@@ -60,7 +57,7 @@
     $section->addText(
     );
     $section->addText(
-        '"Kết thúc file danh sách sản phẩm"',
+        '"Kết thúc file danh sách đơn đặt hàng"',
         array('name' => 'Times New Roman', 'size' => 10)
     );
 
@@ -87,7 +84,7 @@
 
     // Saving the document as OOXML file...
     $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-    $filePath = __DIR__ . '/../../../assets/templates/words/products-list.docx';
+    $filePath = __DIR__ . '/../../../assets/templates/words/orders-list.docx';
     $objWriter->save($filePath);
 
     // Saving the document as ODF file...

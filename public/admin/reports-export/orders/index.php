@@ -77,19 +77,19 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <a href="/admin/reports-export/customers/genexcel.php" class="btn btn-success mt-3" target="_blank">Xuất Excel</a>
+                                                    <a href="/admin/reports-export/orders/genexcel.php" class="btn btn-success mt-3" target="_blank">Xuất Excel</a>
                                                     <br /><br />
-                                                    <a href="/assets/templates/excels/customers-list.xlsx">Tải File Excel danh sách khách hàng</a>
+                                                    <a href="/assets/templates/excels/orders-list.xlsx">Tải File Excel danh sách đơn đặt hàng</a>
                                                 </td>
                                                 <td>
-                                                    <a href="/admin/reports-export/customers/genword.php" class="btn btn-success mt-3" target="_blank">Xuất Word</a>
+                                                    <a href="/admin/reports-export/orders/genword.php" class="btn btn-success mt-3" target="_blank">Xuất Word</a>
                                                     <br /><br />
-                                                    <a href="/assets/templates/words/customers-list.docx">Tải File Word danh sách khách hàng</a>
+                                                    <a href="/assets/templates/words/orders-list.docx">Tải File Word danh sách đơn đặt hàng</a>
                                                 </td>
                                                 <td>
-                                                    <a href="/admin/reports-export/customers/genpdf.php" class="btn btn-success mt-3" target="_blank">Xuất PDF</a>
+                                                    <a href="/admin/reports-export/orders/genpdf.php" class="btn btn-success mt-3" target="_blank">Xuất PDF</a>
                                                     <br /><br />
-                                                    <a href="/assets/templates/pdfs/customers-list.pdf">Tải File PDF danh sách khách hàng</a>
+                                                    <a href="/assets/templates/pdfs/orders-list.pdf" target="_blank">Tải File PDF danh sách đơn đặt hàng</a>
                                                 </td>
                                             </tr>
 

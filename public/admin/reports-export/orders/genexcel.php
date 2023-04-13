@@ -18,10 +18,10 @@
         echo '<script>location.href = "/index.php";</script>';
     }
 
-    use DientuCT\Project\Product;
-    $product = new Product($PDO);
-    $products = $product->viewProducts();
-    // var_dump($products); die;
+    use DientuCT\Project\Order;
+    $order = new Order($PDO);
+    $orders = $order->viewOrders();
+// var_dump($orders); die;
 
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -77,69 +77,60 @@
 
     //Dòng Tiêu đề
     $sheet = $spreadsheet->getActiveSheet()
-        ->setCellValue('A1', "Danh sách sản phẩm");
+        ->setCellValue('A1', "Danh sách đơn đặt hàng");
     $spreadsheet->getActiveSheet()->getRowDimension('1')->setRowHeight(22);
     $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setName('Times New Roman')->setSize(14)->setBold(true);
 
 
     //Merge Tiêu đề
-    $spreadsheet->getActiveSheet()->mergeCells("A1:F1");
+    $spreadsheet->getActiveSheet()->mergeCells("A1:C1");
     // set cell alignment
     $spreadsheet->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
     //setting column width
-    $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(12);
-    $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(50);
-    $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(25);
-    $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(15);
-    $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(18);
-    $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(18);
+    $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(14);
+    $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(25);
+    $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(17);
+
 
 
     //Header
     $sheet = $spreadsheet->getActiveSheet()
-        ->setCellValue('A2', "Mã SP")
-        ->setCellValue('B2', "Tên sản phẩm")
-        ->setCellValue('C2', "Giá")
-        ->setCellValue('D2', "Số lượng")
-        ->setCellValue('E2', "Loại sản phẩm")
-        ->setCellValue('F2', "Nhà sản xuất");
+        ->setCellValue('A2', "Đơn hàng")
+        ->setCellValue('B2', "Ngày lập đơn")
+        ->setCellValue('C2', "Khách hàng");
 
     //Set font style
     //chuyen vao mang
     // $spreadsheet->getActiveSheet()->getStyle('A2:F2')->getFont()->setName('Times New Roman')->setSize(12);
     // $spreadsheet->getActiveSheet()->getStyle('A2:F2')->getFont()->setBold(true);
 
-    $spreadsheet->getActiveSheet()->getStyle('A2:F2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+    $spreadsheet->getActiveSheet()->getStyle('A2:C2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
     //set font style and background color
-    $spreadsheet->getActiveSheet()->getStyle('A2:F2')->applyFromArray($tableHead);
+    $spreadsheet->getActiveSheet()->getStyle('A2:C2')->applyFromArray($tableHead);
 
 
     $contentStartRow = 3;
     $currentContentRow = 3;
 
 
-    foreach($products as $product):
+    foreach($orders as $order):
     {
         //insert a row after current row (before current row +1)
         $spreadsheet->getActiveSheet()->insertNewRowBefore($currentContentRow+1,1);
 
         //fill the cell with data
         $sheet = $spreadsheet->getActiveSheet()
-            ->setCellValue('A'.$currentContentRow, htmlspecialchars($product->sp_ma))
-            ->setCellValue('B'.$currentContentRow, htmlspecialchars($product->sp_ten))
-            ->setCellValue('C'.$currentContentRow, htmlspecialchars($product->sp_gia))
-            ->setCellValue('D'.$currentContentRow, htmlspecialchars($product->sp_soluong))
-            ->setCellValue('E'.$currentContentRow, htmlspecialchars($product->sp_lsp))
-            ->setCellValue('F'.$currentContentRow, htmlspecialchars($product->sp_nsx));
-
+            ->setCellValue('A'.$currentContentRow, htmlspecialchars($order->dh_ma))
+            ->setCellValue('B'.$currentContentRow, htmlspecialchars($order->dh_thoigiantao))
+            ->setCellValue('C'.$currentContentRow, htmlspecialchars($order->kh_tendangnhap));
         //set row style
         if ($currentContentRow % 2 == 0) {
             //even row
-            $spreadsheet->getActiveSheet()->getStyle('A'.$currentContentRow. ':F'.$currentContentRow)->applyFromArray($evenRow);
+            $spreadsheet->getActiveSheet()->getStyle('A'.$currentContentRow. ':C'.$currentContentRow)->applyFromArray($evenRow);
         } else {
             //odd row
-            $spreadsheet->getActiveSheet()->getStyle('A'.$currentContentRow. ':F'.$currentContentRow)->applyFromArray($oddRow);
+            $spreadsheet->getActiveSheet()->getStyle('A'.$currentContentRow. ':C'.$currentContentRow)->applyFromArray($oddRow);
         }
         $currentContentRow++;
     }
@@ -148,9 +139,9 @@
     //define first row and last row
     $firstRow=2;
     $lastRow=$currentContentRow-1;
-    $spreadsheet->getActiveSheet()->setAutoFilter("A".$firstRow.":F".$lastRow);
+    $spreadsheet->getActiveSheet()->setAutoFilter("A".$firstRow.":C".$lastRow);
 
 
     $writer = new Xlsx($spreadsheet);
-    $filePath = __DIR__ . '/../../../assets/templates/excels/products-list.xlsx';
+    $filePath = __DIR__ . '/../../../assets/templates/excels/orders-list.xlsx';
     $writer->save($filePath);

@@ -9,20 +9,43 @@
     
     require_once '../../../bootstrap.php';
 
+    $kh_tendangnhap_logged=htmlspecialchars($_SESSION['kh_tendangnhap_logged']);
+
+    if ($kh_tendangnhap_logged !='admin' ) {
+        $message = "Bạn không phải là thành viên quản trị website! Bạn không được phép truy cập vào trang này!!!!";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+        echo '<script>location.href = "/index.php";</script>';
+    }
+
     use DientuCT\Project\Customer;
+    use DientuCT\Project\RegisterUser;
 
 	$errors = [];
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		$customer = new Customer($PDO);
+        $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);
+
+        $customer = new Customer($PDO);
 		$customer->fill($_POST);
-        // var_dump($customer);
-        // die;
-		if ($customer->validate()) {
-			$customer->insertCustomer() && redirect(BASE_URL_PATH .'admin/customers/index.php' );
-		} 
-		$errors = $customer->getValidationErrors();
-		}
+
+        $account = new RegisterUser($PDO); //khởi tạo để gọi hàm checkRegister
+        $accountCheck = $account->checkRegister($kh_tendangnhap);
+        if ($accountCheck == true) {
+            //echo '<h4 style="color: red;">Tên tài khoản đã tồn tại!</h4>';
+            echo '<script type="text/javascript">
+                window.onload = function () { alert("Tên tài khoản đã tồn tại!"); }
+                </script>';
+        }
+        else {
+            if ($customer->validate() ) {
+                $customer->insertCustomerUser();
+                $_SESSION['kh_tendangnhap_logged'] = $kh_tendangnhap;
+                echo '<script>location.href = "/admin/customers/index.php";</script>';
+            }
+            $errors = $customer->getValidationErrors();
+        }
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
