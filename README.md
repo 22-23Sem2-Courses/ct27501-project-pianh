@@ -16,3 +16,9 @@ Học kỳ 2, Năm học 2022-2023
 
 **Mô tả dự án**: Website kinh doanh điện thoại, laptop, máy tính bảng,...
 
+Sữa lỗi: Call to undefined function Gregwar\Captcha\imagecreatetruecolor() in 
+C:\...\vendor\gregwar\captcha\src\Gregwar\Captcha\CaptchaBuilder.php:423
+
+Bằng cách sửa đổi file php.ini
+(Bỏ ; để chức năng Capcha có thể hoạt động)
+;extension=gd => extension=gd
