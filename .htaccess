@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^learnforever.xyz$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.learnforever.xyz$
+RewriteCond %{REQUEST_URI} !public/
+RewriteRule (.*) /public/$1 [L]
