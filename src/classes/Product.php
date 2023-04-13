@@ -25,6 +25,7 @@ class Product
 	public $sp_km;
 
 	public $hsp_tentaptin;
+	public $noidungtimkiem;
 
 
 
@@ -111,6 +112,10 @@ class Product
 			$this->sp_km = trim($data['sp_km']);
 		}
 
+		// if (isset($data['noidungtimkiem'])) {
+		// 	$this->noidungtimkiem = trim($data['noidungtimkiem']);
+		// }
+
 		return $this;
 	}
 
@@ -188,7 +193,7 @@ class Product
 
 		return empty($this->errors);
 	}
-	public function all()
+	public function all() //select sanpham
 	{
 		$products = [];
 		
@@ -372,12 +377,20 @@ class Product
 	// }
 
 
-	// Truy vấn dữ liệu sản phẩm và hình sản phẩm
+	// Truy vấn tất cả dữ liệu sản phẩm nối kết table hình sản phẩm
 	public function allProductImages()
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma');
+		$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km');
 		$statement->execute();
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
@@ -409,94 +422,196 @@ class Product
 			'sp_giacu' => $this->sp_giacu,
 			'sp_km' => $this->sp_km,
 			'hsp_tentaptin' => $this->hsp_tentaptin,
-			'sp_thoigiantao' => $this->sp_thoigiantao,
-			'sp_thoigiancapnhat' => $this->sp_thoigiancapnhat
 		] = $row;
 		return $this;
 	}
 
-
-
-
-	// Truy vấn dữ liệu điện thoại
-	public function allMobile()
+	// Truy vấn tất cả dữ liệu điện thoại
+	public function allProductImageMobiles()
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma = sp.sp_ma WHERE (sp.sp_lsp="Điện thoại" OR sp.sp_lsp="Mobile" ) GROUP BY sp.sp_ma');
+		$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										WHERE (sp.sp_lsp="Điện thoại" OR sp.sp_lsp="Mobile" )
+										GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km
+										LIMIT 15');
 		$statement->execute();
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDB($row);
+			$product->fillFromDBProductImages($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
-	
-	public function allLaptop()
+	// Truy vấn tất cả dữ liệu laptop
+	public function allProductImageLaptops()
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma = sp.sp_ma WHERE sp.sp_lsp="Laptop" GROUP BY sp.sp_ma');
+		$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										WHERE (sp.sp_lsp="Laptop")
+										GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km
+										LIMIT 5');
 		$statement->execute();
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDB($row);
+			$product->fillFromDBProductImages($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
-	public function allTablet()
+	// Truy vấn tất cả dữ liệu tablet
+	public function allProductImageTablets()
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma = sp.sp_ma WHERE (sp.sp_lsp="Tablet" OR sp.sp_lsp="Máy tính bảng") GROUP BY sp.sp_ma');
+		$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										WHERE (sp.sp_lsp="Tablet" OR sp.sp_lsp="Máy tính bảng")
+										GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km 
+										LIMIT 5') ;
 		$statement->execute();
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDB($row);
+			$product->fillFromDBProductImages($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
-	public function allSmartwatch()
+	// Truy vấn tất cả dữ liệu Accessory
+	public function allProductImageAccessorys()
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma = sp.sp_ma WHERE (sp.sp_lsp="Smartwatch" OR sp.sp_lsp="Đồng hồ thông minh" ) GROUP BY sp.sp_ma');
+		$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										WHERE (sp.sp_lsp="Accessory" OR sp.sp_lsp="Phụ kiện")
+										GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km 
+										LIMIT 5') ;
 		$statement->execute();
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDB($row);
+			$product->fillFromDBProductImages($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
+		// Truy vấn tất cả dữ liệu Smartwatchs
+		public function allProductImageSmartwatchs()
+		{
+			$products = [];
+			
+			$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+												sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+												sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+												sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+											FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+											WHERE (sp.sp_lsp="Smartwatch" OR sp.sp_lsp="Đồng hồ thông minh")
+											GROUP BY sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+												sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+												sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+												sp.sp_km 
+											LIMIT 5') ;
+			$statement->execute();
+			while ($row = $statement->fetch()) {
+				$product = new Product($this->db);
+				$product->fillFromDBProductImages($row);
+				$products[] = $product;
+			}
+		
+			return $products;
+		}
 
-	public function allAccessory()
+		// Tất cả hình ảnh của một sản phâm
+		public function allImageOfProduct($sp_ma)
+		{
+			$products = [];
+			
+			$statement = $this->db->prepare('SELECT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+												sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+												sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+												sp.sp_km, hsp.hsp_tentaptin
+											FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+											WHERE sp.sp_ma = :sp_ma
+											');
+			$statement->execute(['sp_ma' => $sp_ma]);
+			while ($row = $statement->fetch()) {
+				$product = new Product($this->db);
+				$product->fillFromDBProductImages($row);
+				$products[] = $product;
+			}
+		
+			return $products;
+		}
+
+	// Tìm kiếm sản phẩm
+	public function findProductImage($noidungtimkiem)
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT * FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma = sp.sp_ma WHERE (sp.sp_lsp="Accessory" OR sp.sp_lsp="Phụ kiện" ) GROUP BY sp.sp_ma');
-		$statement->execute();
+		$statement = $this->db->prepare('SELECT DISTINCT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+											sp.sp_km, hsp.hsp_tentaptin
+										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+										WHERE ((sp.sp_ten LIKE :noidungtimkiem) OR (sp.sp_lsp LIKE :noidungtimkiem) 
+										)
+										') ;
+										
+		$statement->execute(['noidungtimkiem' => '%' . $noidungtimkiem . '%']);
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDB($row);
+			$product->fillFromDBProductImages($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
-	
+// 	$statement = $this->db->prepare('SELECT DISTINCT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+// 	sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+// 	sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+// 	sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
+// FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+// WHERE ((sp.sp_ten LIKE :%noidungtimkiem%) OR (sp.sp_hedieuhanh LIKE :%noidungtimkiem%)
+// 		OR (sp.sp_ram LIKE :%noidungtimkiem%) OR (sp.sp_rom LIKE :noidungtimkiem) 
+// 		OR (sp.sp_gia LIKE :noidungtimkiem) OR (sp.sp_lsp LIKE :%noidungtimkiem%) 
+// )
+// ') ;
 
 
 

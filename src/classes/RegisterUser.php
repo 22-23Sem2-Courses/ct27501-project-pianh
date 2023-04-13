@@ -35,7 +35,10 @@ class RegisterUser
 		if (isset($data['kh_ten'])) {
 			$this->kh_ten = trim($data['kh_ten']);
 		}
-		
+
+		if (isset($data['kh_matkhau'])) {
+			$this->kh_matkhau = trim($data['kh_matkhau']);
+		}
 
 		if (isset($data['kh_dienthoai'])) {
 			$this->kh_dienthoai = preg_replace('/\D+/', '', $data['kh_dienthoai']);

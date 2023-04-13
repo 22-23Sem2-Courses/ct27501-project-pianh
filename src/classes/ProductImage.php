@@ -142,6 +142,7 @@ class ProductImage
 		return $this;
 	}
 
+	// Tìm các hình sản phẩm dựa vào hsp_ma
 	public function findProductImage($hsp_ma)
 	{
 		$statement = $this->db->prepare('select * from `hinhsanpham` hsp join `sanpham` sp ON sp.sp_ma = hsp.sp_ma where hsp_ma = :hsp_ma');
@@ -196,4 +197,51 @@ class ProductImage
 		$statement = $this->db->prepare('delete from hinhsanpham where hsp_ma = :hsp_ma');
 		return $statement->execute(['hsp_ma' => $this->hsp_ma]);
 	}
+
+	// Tìm hình sản phẩm đầu tiên dựa vào sp_ma
+	public function findFirstProductImageByProduct($sp_ma)
+	{
+		$statement = $this->db->prepare('SELECT hsp.hsp_ma, sp.sp_ten, sp.sp_lsp, sp.sp_ma, hsp.hsp_tentaptin, hsp.hsp_thoigiantao, hsp.hsp_thoigiancapnhat, MIN(hsp.hsp_tentaptin) FROM `hinhsanpham` hsp 
+										JOIN `sanpham` sp ON sp.sp_ma = hsp.sp_ma where hsp.sp_ma = :sp_ma
+										LIMIT 1');
+		// $statement = $this->db->prepare('select * from hinhsanpham where hsp_ma = :hsp_ma');
+		$statement->execute(['sp_ma' => $sp_ma]);
+
+		if ($row = $statement->fetch()) {
+			$this->fillProductImage($row);
+			return $this;
+		} 
+		return null;
+	}
+
+	// Tìm các hình sản phẩm dựa vào sp_ma
+	public function findProductImageByProduct($sp_ma)
+	{
+		$statement = $this->db->prepare('select * from `hinhsanpham` hsp join `sanpham` sp ON sp.sp_ma = hsp.sp_ma where hsp.sp_ma = :sp_ma');
+		// $statement = $this->db->prepare('select * from hinhsanpham where hsp_ma = :hsp_ma');
+		$statement->execute(['sp_ma' => $sp_ma]);
+
+		if ($row = $statement->fetch()) {
+			$this->fillProductImage($row);
+			return $this;
+		} 
+		return null;
+	}
+
+	public function findFirstImage($sp_ma)
+	{
+		$statement = $this->db->prepare('SELECT hsp_ma, hsp_tentaptin, sp_ma, hsp_thoigiantao, hsp_thoigiancapnhat, MIN (hsp_tentaptin) 
+										FROM hinhsanpham 
+										WHERE sp_ma = :sp_ma 
+										LIMIT 1');
+		$statement->execute(['sp_ma' => $sp_ma]);
+
+		if ($row = $statement->fetch()) {
+			$this->fillFromDBFind($row);
+			return $this;
+		} 
+		return null;
+	} 
+
+
 }

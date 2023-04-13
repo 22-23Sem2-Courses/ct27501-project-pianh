@@ -141,6 +141,33 @@ class Order
 		return $this;
 	}
 
+	public function viewOrders()
+	{
+		$orders = [];
+		
+		$statement = $this->db->prepare('select * from viewdondathang');
+		$statement->execute();
+		while ($row = $statement->fetch()) {
+			$order = new Order($this->db);
+			$order->fillFromDBViewOrders($row);
+			$orders[] = $order;
+		}
+	
+		return $orders ;
+	}
+
+	protected function fillFromDBViewOrders(array $row)
+	{
+		[
+			'dh_ma' => $this->dh_ma,
+			'dh_thoigiantao' => $this->dh_thoigiantao,
+			'kh_tendangnhap' => $this->kh_tendangnhap,
+		] = $row;
+		return $this;
+	}
+
+
+
 	public function save()
 	{
 		$result = false;

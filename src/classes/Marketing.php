@@ -269,4 +269,24 @@ class Marketing
 		$statement = $this->db->prepare('delete from marketing where mkt_ma = :mkt_ma');
 		return $statement->execute(['mkt_ma' => $this->mkt_ma]);
 	}
+
+
+
+	public function findProductMarketing($sp_ma)
+	{
+		$statement = $this->db->prepare('select * from marketing mkt join `sanpham` sp ON sp.sp_ma = mkt.sp_ma where mkt.sp_ma = :sp_ma');
+		$statement->execute(['sp_ma' => $sp_ma]);
+
+		if ($row = $statement->fetch()) {
+			$this->fillFromDB($row);
+			return $this;
+		} 
+		return null;
+	}
+	
+	
+	
+
+	
+
 }
