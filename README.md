@@ -16,9 +16,15 @@ Học kỳ 2, Năm học 2022-2023
 
 **Mô tả dự án**: Website kinh doanh điện thoại, laptop, máy tính bảng,...
 
-Sữa lỗi: Call to undefined function Gregwar\Captcha\imagecreatetruecolor() in 
-C:\...\vendor\gregwar\captcha\src\Gregwar\Captcha\CaptchaBuilder.php:423
 
-Bằng cách sửa đổi file php.ini
+Sữa lỗi: 
+Call to undefined function Gregwar\Captcha\imagecreatetruecolor() in 
+C:\...\vendor\gregwar\captcha\src\Gregwar\Captcha\CaptchaBuilder.php:423 trên Localhost
+
+Vào file php.ini
 (Bỏ ; để chức năng Capcha có thể hoạt động)
 ;extension=gd => extension=gd
+
+Sữa lỗi: 
+Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.0.2 Trên Hosting
+composer update --ignore-platform-reqs
