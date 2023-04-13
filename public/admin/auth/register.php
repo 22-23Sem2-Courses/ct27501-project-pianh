@@ -6,26 +6,34 @@
     require_once '../../../bootstrap.php';
     use DientuCT\Project\RegisterUser;
     $errors = [];
-    $errors2 = [];
+   
 
     // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
     if (isset($_POST['submitRegister']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
         $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);
         $customer = new RegisterUser($PDO);
         $customer->fill($_POST);
-        // var_dump($customer);
-        // die;
-        // var_dump($_POST);
-        // die;
-        if ($customer->validate() && $customer->validatePassword($_POST)) {
-            
-            $customer->insertCustomerUser();
+        // var_dump($customer);// die;
+        // var_dump($_POST);die;
 
-            $_SESSION['kh_tendangnhap_logged'] = $kh_tendangnhap;
-            echo '<script>location.href = "/admin/pages/dashboard.php";</script>';
-        } 
-        $errors = $customer->getValidationErrors();
+        $customerCheck = $customer->checkRegister($kh_tendangnhap);
+        
+        if ($customerCheck == true) {
+            //echo '<h4 style="color: red;">Tên tài khoản đã tồn tại!</h4>';
+            echo '<script type="text/javascript">
+                window.onload = function () { alert("Tên tài khoản đã tồn tại!"); }
+                </script>';
         }
+        else {
+            if ($customer->validate() && $customer->validatePassword($_POST)) {
+                $customer->insertCustomerUser();
+                $_SESSION['kh_tendangnhap_logged'] = $kh_tendangnhap;
+                echo '<script>location.href = "/admin/pages/dashboard.php";</script>';
+            }
+            $errors = $customer->getValidationErrors();
+        }
+    }
+
 ?>
 
 
@@ -38,7 +46,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký Backend | dienmay.vn</title>
+    <title>Đăng ký Admin | DientuCanTho.vn</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../../assets/admin/css/bootstrap.min.css" type="text/css" />
@@ -175,7 +183,7 @@
                             </div>
                             
                             <div class="box-forgot d-flex justify-content-end">
-                                <a href="https://didongthongminh.vn/quen-mat-khau" title="Quên mật khẩu?" class="forgot-password  mr-3 mt-0 mb-0">
+                                <a href="#" title="Quên mật khẩu?" class="forgot-password  mr-3 mt-0 mb-0">
                                 Quên mật khẩu?
                                 </a>
                             </div>
