@@ -5,12 +5,12 @@
 ?>
 <div id="header" class="header-shadow fixed-header theme-white">
     <div class="header__logo">
-        <div class="logo-src"></div>
-        <div class="brand">
+        <a href="/admin/pages/dashboard.php" class="logo-src"></a>
+        <a href="/admin/pages/dashboard.php" class="brand">
             <!-- <h2>
                 Điện tử Cần Thơ
             </h2> -->
-        </div>
+        </a>
     </div>
     <div class="header__toggle-sidebar" onclick="toggleMenuSidebar()">
         <!-- <i class="fa fa-bars" aria-hidden="true"></i> -->
