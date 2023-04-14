@@ -186,29 +186,39 @@
                 "responsive": true,
                 "buttons": [
                     'copy', 'excel', 'csv', 'pdf','print'
-                ]  
+                ],
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, 'All'],
+                ],
+                pageLength: 10,
+                scrollY: '600px',
+                paging: true  
             });
             
             // Cảnh báo khi xóa với sweetalert
-            $('.btnDelete').click(function() {
-                swal({
-                        title: "Bạn có chắc chắn muốn xóa?",
-                        text: "Một khi đã xóa, không thể phục hồi....",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) { // Nếu đồng ý xóa
-                            var mkt_ma = $(this).data('mkt_ma');
-                            var url = "delete.php?mkt_ma=" + mkt_ma;
-                            // Điều hướng qua trang xóa với REQUEST GET, có tham số mkt_ma=...
-                            location.href = url;
-                        } else { // Nếu không đồng ý xóa
-                            swal("Cẩn thận hơn nhé!");
-                        }
-                    });
+            $('#tblMarketings tbody').on('click', '.btnDelete', function () {
+                $('.btnDelete').click(function() {
+                    swal({
+                            title: "Bạn có chắc chắn muốn xóa?",
+                            text: "Một khi đã xóa, không thể phục hồi....",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) { // Nếu đồng ý xóa
+                                var mkt_ma = $(this).data('mkt_ma');
+                                var url = "delete.php?mkt_ma=" + mkt_ma;
+                                // Điều hướng qua trang xóa với REQUEST GET, có tham số mkt_ma=...
+                                location.href = url;
+                            } else { // Nếu không đồng ý xóa
+                                swal("Cẩn thận hơn nhé!");
+                            }
+                        });
+                });
             });
+
         });
     </script>
 </body>

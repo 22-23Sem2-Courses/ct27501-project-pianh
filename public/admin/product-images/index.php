@@ -175,12 +175,21 @@
                 "responsive": true,
                 "buttons": [
                     'copy', 'excel', 'csv', 'pdf','print'
-                ]  
+                ],
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, 'All'],
+                ],
+                pageLength: 10,
+                scrollY: '600px',
+                paging: true  
             });
             
             // Cảnh báo khi xóa với sweetalert
-            $('.btnDelete').click(function() {
-                swal({
+            $('#tblProduct_images tbody').on('click', '.btnDelete', function () {
+                // alert("sự kiện");
+                $('.btnDelete').click(function() {
+                    swal({
                         title: "Bạn có chắc chắn muốn xóa?",
                         text: "Một khi đã xóa, không thể phục hồi....",
                         icon: "warning",
@@ -196,7 +205,11 @@
                             swal("Cẩn thận hơn nhé!");
                         }
                     });
+                });
+
             });
+
+
         });
     </script>
    
