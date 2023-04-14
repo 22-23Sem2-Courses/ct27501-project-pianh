@@ -56,7 +56,7 @@
         </a>
 
         <a href="/user/auth/login.php" class="cart_dd">
-          <span class="nbc">0</span>
+          <!-- <span class="nbc">0</span> -->
         </a>
 
 
