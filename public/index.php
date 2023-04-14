@@ -264,7 +264,7 @@ if (session_id() === '') {
 
                 <!-- Product -->
                 <!-- Điện thoại đáng mua nhất -->
-                <section class="products_news">
+                <section id="mobile" class="products_news">
                     <!-- Tab -->
                     <div id="products_menu_tabs">
                         <div class="nav-tabs">
@@ -306,7 +306,7 @@ if (session_id() === '') {
                     </div>
                     <!-- Product Item -->
                     <div class="products_item_list">
-                        <div id="mobile" class="products_item_content">
+                        <div  class="products_item_content">
                             <div class="row row-cols-5">  <!-- 5 col 1 row -->
                                 <?php foreach ($mobiles as $mobile) :  ?>
                                     <div class="col">
@@ -367,7 +367,7 @@ if (session_id() === '') {
 
 
                 <!-- Laptop đáng mua nhất -->
-                <section class="products_news">
+                <section id="laptop"class="products_news">
                     <!-- Tab -->
                     <div id="products_menu_tabs">
                         <div class="nav-tabs">
@@ -409,7 +409,7 @@ if (session_id() === '') {
                     </div>
                     <!-- Product Item -->
                     <div class="products_item_list">
-                        <div id="laptop" class="products_item_content">
+                        <div  class="products_item_content">
                             <div class="row row-cols-5">  <!-- 5 col 1 row -->
                                 <?php foreach ($laptops as $laptop) :  ?>
                                     <div class="col">
@@ -469,7 +469,7 @@ if (session_id() === '') {
                 </section>
 
                 <!-- Máy tính bảng đáng mua nhất -->
-                <section class="products_news">
+                <section  id="tablet" class="products_news">
                     <!-- Tab -->
                     <div id="products_menu_tabs">
                         <div class="nav-tabs">
@@ -511,7 +511,7 @@ if (session_id() === '') {
                     </div>
                     <!-- Product Item -->
                     <div class="products_item_list">
-                        <div id="tablet" class="products_item_content">
+                        <div class="products_item_content">
                             <div class="row row-cols-5">  <!-- 5 col 1 row -->
                                 <?php foreach ($tablets as $tablet) :  ?>
                                     <div class="col">
@@ -571,7 +571,7 @@ if (session_id() === '') {
                 </section>
 
                 <!-- Phụ kiện đáng mua nhất -->
-                <section class="products_news">
+                <section id="accessory" class="products_news">
                     <!-- Tab -->
                     <div id="products_menu_tabs">
                         <div class="nav-tabs">
@@ -613,7 +613,7 @@ if (session_id() === '') {
                     </div>
                     <!-- Product Item -->
                     <div class="products_item_list">
-                        <div id="accessory" class="products_item_content">
+                        <div  class="products_item_content">
                             <div class="row row-cols-5">  <!-- 5 col 1 row -->
                                 <?php foreach ($accessorys as $accessory) :  ?>
                                     <div class="col">
@@ -673,7 +673,7 @@ if (session_id() === '') {
                 </section>
 
                 <!-- Đồng hồ thông minh đáng mua nhất -->
-                <section class="products_news">
+                <section id="smartwatch" class="products_news">
                     <!-- Tab -->
                     <div id="products_menu_tabs">
                         <div class="nav-tabs">
@@ -715,7 +715,7 @@ if (session_id() === '') {
                     </div>
                     <!-- Product Item -->
                     <div class="products_item_list">
-                        <div id="smartwatch" class="products_item_content">
+                        <div class="products_item_content">
                             <div class="row row-cols-5">  <!-- 5 col 1 row -->
                                 <?php foreach ($smartwatchs as $smartwatch) :  ?>
                                     <div class="col">
