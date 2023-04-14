@@ -11,8 +11,6 @@
     $builder = new CaptchaBuilder();
     $builder->build();
 
-
-
     use DientuCT\Project\Customer;
     $customer = new Customer($PDO);
    
