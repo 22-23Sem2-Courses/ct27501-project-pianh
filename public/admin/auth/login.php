@@ -147,7 +147,7 @@
                                 ) {
                                    
                                     $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);
-                                    $kh_matkhau = addslashes($_POST['kh_matkhau']);
+                                    $kh_matkhau = addslashes(sha1($_POST['kh_matkhau']));
                                     $customerCheck=$customer->checkLogin($kh_tendangnhap, $kh_matkhau);
     
                                     if ($customerCheck > 0) {
