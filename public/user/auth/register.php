@@ -3,14 +3,25 @@
     if (session_id() === '') {
         session_start();
     }
+
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
     require_once '../../../bootstrap.php';
+    require_once '../../../vendor/autoload.php';
 
     use DientuCT\Project\RegisterUser;     
+ 
     $errors = [];
   
     // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
     if (isset($_POST['submitRegister']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
         $kh_tendangnhap = addslashes($_POST['kh_tendangnhap']);
+        $kh_ten = addslashes($_POST['kh_ten']);
+        $kh_email = addslashes($_POST['kh_email']);
+        $kh_dienthoai = addslashes($_POST['kh_dienthoai']);
+
         $customer = new RegisterUser($PDO);
         $customer->fill($_POST);
         // var_dump($customer);// die;
@@ -29,6 +40,49 @@
                 $customer->insertCustomerUser();
                 $_SESSION['kh_tendangnhap_logged'] = $kh_tendangnhap;
                 echo '<script>location.href = "/index.php";</script>';
+                
+                // Tiến hành gửi Mail cho khách hàng đăng ký tài khoản thành công
+                if (isset($kh_tendangnhap)) {
+                    $mail = new PHPMailer(true);
+                    $mail->CharSet= 'UTF-8';
+
+                    try {
+                        //Server settings
+                        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
+                        $mail->isSMTP();                                           
+                        $mail->Host       = 'smtp.gmail.com';                     
+                        $mail->SMTPAuth   = true;                                   
+                        $mail->Username   = 'ndanhdev@gmail.com';                     
+                        $mail->Password   = 'gjvpglhavaqsfniq';                             
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;           
+                        $mail->Port       = 465;                                    
+                
+                        //Recipients
+                        $mail->setFrom('ndanhdev@gmail.com', 'DientuCanTho.vn');
+                        $mail->addAddress($kh_email);               //Name is optional
+
+                        //Content
+                        $mail->isHTML(true);                                  //Set email format to HTML
+                        $mail->Subject = 'Chào mừng bạn đến với DientuCanTho.vn';
+                        $mail->Body    = "<p>Chúc mừng bạn ".$kh_ten." đã đăng ký tài khoản thành công tại DientuCanTho.vn</p>
+                                            Thông tin tài khoản của bạn như sau: </br>
+                                            <ul>
+                                                <li>Tên đăng nhập: ".$kh_tendangnhap."</li>
+                                                <li>Mật khẩu:</li>
+                                                <li>Email:  ".$kh_email."</li>
+                                                <li>Số điện thoại:  ".$kh_dienthoai."</li>
+                                            </ul>
+                                            </br>Chúc bạn lựa chọn được các sản phẩm thật ưng ý tại DientuCanTho.vn!.
+                                           ";
+                
+                
+                        $mail->send();
+                        
+                    } catch (Exception $e) {
+                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                    }
+                }
+                                    
             }
             $errors = $customer->getValidationErrors();
         }
