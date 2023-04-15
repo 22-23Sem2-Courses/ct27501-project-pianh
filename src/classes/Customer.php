@@ -21,6 +21,7 @@ class Customer
 	public $kh_trangthai = 0;
 	public $kh_quantri = 0;
 	public $kh_quanly = 0;
+	public $kh_binhluan;
 	public $kh_thoigiantao;
 	public $kh_thoigiancapnhat;
 
@@ -43,7 +44,7 @@ class Customer
 			$this->kh_tendangnhap = trim($data['kh_tendangnhap']);
 		}
         if (isset($data['kh_matkhau'])) {
-			$this->kh_matkhau = trim($data['kh_matkhau']);
+			$this->kh_matkhau = trim(sha1($data['kh_matkhau']));
 		}
 
 		if (isset($data['kh_ten'])) {
@@ -88,6 +89,10 @@ class Customer
 
         if (isset($data['kh_quanly'])) {
 			$this->kh_quanly = trim($data['kh_quanly']);
+		}
+
+		if (isset($data['kh_binhluan'])) {
+			$this->kh_binhluan = trim($data['kh_binhluan']);
 		}
 
 		return $this;
@@ -254,7 +259,7 @@ class Customer
 				'update khachhang set kh_matkhau = :kh_matkhau, kh_ten = :kh_ten, kh_gioitinh = :kh_gioitinh, kh_diachi = :kh_diachi,
                     kh_dienthoai = :kh_dienthoai, kh_email = :kh_email, kh_cmnd = :kh_cmnd, 
 					kh_ngaysinh = :kh_ngaysinh, kh_thangsinh = :kh_thangsinh, kh_namsinh = :kh_namsinh,
-					kh_trangthai = :kh_trangthai, kh_quanly = :kh_quanly,
+					kh_trangthai = :kh_trangthai, kh_quanly = :kh_quanly, kh_binhluan = :kh_binhluan,
                     kh_thoigiancapnhat = now()
 				where kh_tendangnhap = :kh_tendangnhap'
 			);
@@ -271,6 +276,7 @@ class Customer
 				'kh_namsinh' => $this->kh_namsinh,
 				'kh_trangthai' => $this->kh_trangthai,
 				'kh_quanly' => $this->kh_quanly,
+				'kh_binhluan' => $this->kh_binhluan,
 				'kh_tendangnhap' => $this->kh_tendangnhap
             ]);
 		}
