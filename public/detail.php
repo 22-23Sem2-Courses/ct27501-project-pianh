@@ -18,6 +18,7 @@
     $product->find($sp_ma);
 
     use DientuCT\Project\Marketing;
+    use DientuCT\Project\Customer;
     $marketing = new Marketing($PDO);
     $marketing->findProductMarketing($sp_ma);
 
@@ -120,7 +121,7 @@
                         <div class="col-md-6">
                             <form name="frmDetailProduct" id="frmDetailProduct" method="post" action="">
                                 <?php 
-                                    $hinhsanphamdautien = $productImageAlls{0}->hsp_tentaptin;
+                                    $hinhsanphamdautien = ($productImageAlls[0])->hsp_tentaptin;
                                     // var_dump( $hinhsanphamdautien); die;
                                 ?>
                                 <input type="hidden" name="sp_ma" id="sp_ma" value="<?= htmlspecialchars($product->sp_ma) ?>" />
@@ -282,9 +283,9 @@
                                 <div class="row form-comment">
                                     <div class="col">
                                     <!-- Nội dung: -->
-                                    <textarea name="gy_noidung" id="gy_noidung" class="form-control " placeholder="Nội dung góp ý" ></textarea>
+                                    <textarea name="kh_binhluan" id="kh_binhluan" class="form-control " placeholder="Nội dung góp ý" ></textarea>
                                     </br>
-                                    <button name="btnSave" id="btnSave" class="btn btn-primary btnSave" >
+                                    <button name="btnFeedback" id="btnFeedback" class="btn btn-primary btnSave" >
                                     Gửi góp ý
                                     </button>
 
@@ -295,7 +296,31 @@
                     </div>
                 </div>
 
+                <?php
+                        
+                        $kh_tendangnhap_logged=htmlspecialchars($_SESSION['kh_tendangnhap_logged']);
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                            if (!isset($kh_tendangnhap_logged) ) {
+                                $message = "Bạn chưa đăng nhập nên không được phép gửi bình luận! Vui lòng đăng nhập!!!";
+                                echo "<script type='text/javascript'>alert('$message');</script>";
+                                echo '<script>location.href = "/index.php";</script>';
+                            } else {
+                                
+                                $customer = new Customer($PDO);
+                                $customer->find($kh_tendangnhap_logged);
+		                        $customer->fill($_POST);
+                                $customer->update($_POST);
+                                
+                                $message = "Bình luận thành công và đang chờ kiểm duyệt!";
+                                echo "<script type='text/javascript'>alert('$message');</script>";
+                                echo '<script>location.href = "/detail.php";</script>';
 
+                            }
+                            
+
+                        }
+
+                ?>
 
 
   
