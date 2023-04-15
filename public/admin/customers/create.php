@@ -39,7 +39,6 @@
         else {
             if ($customer->validate() ) {
                 $customer->insertCustomerUser();
-                $_SESSION['kh_tendangnhap_logged'] = $kh_tendangnhap;
                 echo '<script>location.href = "/admin/customers/index.php";</script>';
             }
             $errors = $customer->getValidationErrors();
