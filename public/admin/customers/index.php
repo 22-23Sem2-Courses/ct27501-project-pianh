@@ -215,7 +215,7 @@
                     [5, 10, 25, 50, 'All'],
                 ],
                 pageLength: 10,
-                scrollY: '600px',
+                // scrollY: '600px',
                 paging: true  
             });
             
