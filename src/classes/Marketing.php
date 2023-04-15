@@ -205,7 +205,7 @@ class Marketing
 				'mkt_quatang' => $this->mkt_quatang,
 				'sp_ma' => $this->sp_ma,
 				'mkt_ma' => $this->mkt_ma]);
-		} else if ( !$this->sp_ma) {
+		} else  {
 			//Chưa có thông tin Marketing cho sản phẩm thì thêm mới
 			$statement = $this->db->prepare(
 				'insert into marketing (mkt_tinhtrang, mkt_bosanpham, mkt_baohanh, mkt_hieunang, mkt_hienthi, mkt_trainghiem, mkt_tinhnang, 
@@ -232,12 +232,7 @@ class Marketing
 			}
 			
 		}
-		else {
-			//Thêm mới thông tin Marketing cho sản phẩm đã tồn tại thông tin trước đó (trùng khóa ngoại)
-			$message = "Đã tồn tại thông tin Marketing cho sản phẩm này! Nếu cần thay đổi hãy sử dụng chức năng chỉnh sửa!";
-    		echo "<script type='text/javascript'>alert('$message');</script>";
-    		echo '<script>location.href = "index.php";</script>';
-		}
+
 		
 		return $result;
 	}
