@@ -44,7 +44,6 @@
     } 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,8 +65,7 @@
     <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/styles.css" ?>" type="text/css" />
     <link rel="stylesheet" href="<?= BASE_URL_PATH . "assets/admin/css/responsive.css" ?>" type="text/css" />
 </head>
-<body
-
+<body>
     <?php
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
@@ -77,7 +75,6 @@
     <?php include_once __DIR__ . '../../../../partials/admin/header.php'; ?>
 
     <div class="container-fluid">
-
         <div class="main row">
             <?php include_once __DIR__ . '../../../../partials/admin/sidebar.php'; ?>
 
@@ -143,41 +140,7 @@
             </div>
         </div>
     </div>
-    
-    <?php include_once __DIR__ . '../../../../partials/admin/footer.php'; ?>
-    <!-- jQuery JS -->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/jquery.min.js" ?>"></script>
-    <!-- Bootstrap JS -->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/bootstrap.min.js" ?>"></script>
-    <!-- Wow js -->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/wow.min.js" ?>"></script>
-    <!-- SweetAlert JS-->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.js" ?>"></script>
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/sweetalert.min.js" ?>"></script>
-    <!-- Chart JS-->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/chart.min.js" ?>"></script>
-    <!-- DataTable JS -->   
-   <script src="<?= BASE_URL_PATH . "assets/admin/js/datatables.min.js" ?>"></script>
-   <script src="<?= BASE_URL_PATH . "assets/admin/js/buttons.bootstrap4.min.js" ?>"></script>
-   <script src="<?= BASE_URL_PATH . "assets/admin/js/pdfmake.min.js" ?>"></script>
-   <script src="<?= BASE_URL_PATH . "assets/admin/js/vfs_fonts.js" ?>"></script>
-    <!-- Custom JS -->
-    <script src="<?= BASE_URL_PATH . "assets/admin/js/app.js" ?>"></script>
 
-    <script>
-        $(document).ready(function() {
-            //Gọi wow js
-            new WOW().init();
 
-            //Header toggle-mobile click
-            $('#header__toggle-mobile').click(function() {
-                // alert('ok');
-                $('.header__content').slideToggle();
-            })
-            
-        });
-    </script>
-
-    
 </body>
 </html>
