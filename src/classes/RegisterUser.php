@@ -37,7 +37,7 @@ class RegisterUser
 		}
 
 		if (isset($data['kh_matkhau'])) {
-			$this->kh_matkhau = trim($data['kh_matkhau']);
+			$this->kh_matkhau = (trim($data['kh_matkhau']));
 		}
 
 		if (isset($data['kh_dienthoai'])) {
@@ -116,7 +116,7 @@ class RegisterUser
 			
 		$result = $statement->execute([
 			'kh_tendangnhap' => $this->kh_tendangnhap,
-			'kh_matkhau' => $this->kh_matkhau,
+			'kh_matkhau' => sha1($this->kh_matkhau),
 			'kh_ten' => $this->kh_ten,
 			'kh_dienthoai' => $this->kh_dienthoai,
 			'kh_email' => $this->kh_email
