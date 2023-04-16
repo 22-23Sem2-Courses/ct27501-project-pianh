@@ -351,30 +351,30 @@ class Product
 		return false;
 	}
 
-	public function delete()
-	{
-		$statement = $this->db->prepare('delete from sanpham where sp_ma = :sp_ma');
-		return $statement->execute(['sp_ma' => $this->sp_ma]);
-	}
-
 	// public function delete()
 	// {
-	// 	$result = false;
-		
-	// 	if ($this->sp_ma >= 0) {
-
-	// 		$statement = $this->db->prepare('delete from marketing where sp_ma = :sp_ma');
-	// 		$result = $statement->execute(['sp_ma' => $this->sp_ma]);
-
-	// 		$statement = $this->db->prepare('delete from hinhsanpham where sp_ma = :sp_ma');
-	// 		$result = $statement->execute(['sp_ma' => $this->sp_ma]);
-
-	// 		$statement = $this->db->prepare('delete from sanpham where sp_ma = :sp_ma');
-	// 		$result = $statement->execute(['sp_ma' => $this->sp_ma]);
-	// 	} 
-			
-	// 	return $result;
+	// 	$statement = $this->db->prepare('delete from sanpham where sp_ma = :sp_ma');
+	// 	return $statement->execute(['sp_ma' => $this->sp_ma]);
 	// }
+
+	public function delete()
+	{
+		$result = false;
+		
+		if ($this->sp_ma >= 0) {
+
+			$statement = $this->db->prepare('delete from marketing where sp_ma = :sp_ma');
+			$result = $statement->execute(['sp_ma' => $this->sp_ma]);
+
+			$statement = $this->db->prepare('delete from hinhsanpham where sp_ma = :sp_ma');
+			$result = $statement->execute(['sp_ma' => $this->sp_ma]);
+
+			$statement = $this->db->prepare('delete from sanpham where sp_ma = :sp_ma');
+			$result = $statement->execute(['sp_ma' => $this->sp_ma]);
+		} 
+			
+		return $result;
+	}
 
 
 	// Truy vấn tất cả dữ liệu sản phẩm nối kết table hình sản phẩm
@@ -579,40 +579,78 @@ class Product
 		}
 
 	// Tìm kiếm sản phẩm
+	// public function findProductImage($noidungtimkiem)
+	// {
+	// 	$products = [];
+		
+	// 	$statement = $this->db->prepare('SELECT DISTINCT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
+	// 										sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
+	// 										sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
+	// 										sp.sp_km, hsp.hsp_tentaptin
+	// 									FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
+	// 									WHERE ((sp.sp_ten LIKE :noidungtimkiem) OR (sp.sp_lsp LIKE :noidungtimkiem) 
+	// 									)
+	// 									') ;
+										
+	// 	$statement->execute(['noidungtimkiem' => '%' . $noidungtimkiem . '%']);
+	// 	while ($row = $statement->fetch()) {
+	// 		$product = new Product($this->db);
+	// 		$product->fillFromDBProductImages($row);
+	// 		$products[] = $product;
+	// 	}
+	
+	// 	return $products;
+	// }
+
 	public function findProductImage($noidungtimkiem)
 	{
 		$products = [];
 		
-		$statement = $this->db->prepare('SELECT DISTINCT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
-											sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
-											sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
-											sp.sp_km, hsp.hsp_tentaptin
-										FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
-										WHERE ((sp.sp_ten LIKE :noidungtimkiem) OR (sp.sp_lsp LIKE :noidungtimkiem) 
+		$statement = $this->db->prepare('SELECT DISTINCT sp_ma, sp_ten, sp_soluong, sp_dophangiai, sp_manhinh,
+											sp_camera_truoc, sp_camera_sau, sp_hedieuhanh, sp_chip,
+											sp_ram, sp_rom, sp_pin, sp_nsx, sp_lsp, sp_gia, sp_giacu,
+											sp_km
+										FROM sanpham 
+										WHERE (
+											(sp_ten LIKE :noidungtimkiem) OR (sp_lsp LIKE :noidungtimkiem) OR (sp_hedieuhanh LIKE :noidungtimkiem)
 										)
 										') ;
 										
 		$statement->execute(['noidungtimkiem' => '%' . $noidungtimkiem . '%']);
 		while ($row = $statement->fetch()) {
 			$product = new Product($this->db);
-			$product->fillFromDBProductImages($row);
+			$product->fillFromDBProductSearch($row);
 			$products[] = $product;
 		}
 	
 		return $products;
 	}
 
-// 	$statement = $this->db->prepare('SELECT DISTINCT sp.sp_ma, sp.sp_ten, sp.sp_soluong, sp.sp_dophangiai, sp.sp_manhinh,
-// 	sp.sp_camera_truoc, sp.sp_camera_sau, sp.sp_hedieuhanh, sp.sp_chip,
-// 	sp.sp_ram, sp.sp_rom, sp.sp_pin, sp.sp_nsx, sp.sp_lsp, sp.sp_gia, sp.sp_giacu,
-// 	sp.sp_km,  MIN(hsp.hsp_tentaptin) AS hsp_tentaptin
-// FROM sanpham sp JOIN hinhsanpham hsp ON hsp.sp_ma=sp.sp_ma
-// WHERE ((sp.sp_ten LIKE :%noidungtimkiem%) OR (sp.sp_hedieuhanh LIKE :%noidungtimkiem%)
-// 		OR (sp.sp_ram LIKE :%noidungtimkiem%) OR (sp.sp_rom LIKE :noidungtimkiem) 
-// 		OR (sp.sp_gia LIKE :noidungtimkiem) OR (sp.sp_lsp LIKE :%noidungtimkiem%) 
-// )
-// ') ;
 
+	protected function fillFromDBProductSearch(array $row)
+	{
+		[
+			'sp_ma' => $this->sp_ma,
+			'sp_ten' => $this->sp_ten,
+			'sp_soluong' => $this->sp_soluong,
+			'sp_dophangiai' => $this->sp_dophangiai,
+			'sp_manhinh' => $this->sp_manhinh,
+			'sp_camera_truoc' => $this->sp_camera_truoc,
+			'sp_camera_sau' => $this->sp_camera_sau,
+			'sp_hedieuhanh' => $this->sp_hedieuhanh,
+			'sp_chip' => $this->sp_chip,
+			'sp_ram' => $this->sp_ram,
+			'sp_rom' => $this->sp_rom,
+			'sp_pin' => $this->sp_pin,
+			'sp_nsx' => $this->sp_nsx,
+			'sp_lsp' => $this->sp_lsp,
+			'sp_gia' => $this->sp_gia,
+			'sp_giacu' => $this->sp_giacu,
+			'sp_km' => $this->sp_km,
+		] = $row;
+		return $this;
+	}
+	
 
 
 }
