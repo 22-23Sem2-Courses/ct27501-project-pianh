@@ -8,7 +8,7 @@
 html {
     position: relative;
     min-height: 100%;
-
+    scroll-behavior: smooth;
   }
   
 .footer {
@@ -129,7 +129,8 @@ body {
 
 #header .search-btn:hover {
     /* background-color: var(--success-color); */
-    background-color: #28A745;
+    background-color: #fcb483;
+    border: #fcb483;
 }
 
 /* #header .search-btn:focus {
@@ -1326,4 +1327,22 @@ ul.preview-thumbnail.nav.nav-tabs {
 .form-search {
     margin-right: 40px;
     max-height: 200px;
+}
+
+/* Scroll to top */
+.scroll-top {
+    max-width: 90px;
+    position: fixed;
+    bottom: 50px;
+    right: 5px;
+    z-index: 15;
+}
+
+.scroll-top:hover {
+    max-width: 90px;
+    position: fixed;
+    bottom: 50px;
+    right: 5px;
+    z-index: 15;
+    transform: translateY(-5px);
 }
