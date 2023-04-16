@@ -49,13 +49,13 @@
           <span>085 5100 001</span>
         </a>
 
-        <a href="#" class="address">
-          Cửa hàng
+        <a href="/about.php" class="address">
+          Tìm kiếm
           <br>
-          Gần bạn
+          Cửa hàng
         </a>
 
-        <a href="/user/auth/login.php" class="cart_dd">
+        <a href="/cart.php" class="cart_dd">
           <!-- <span class="nbc">0</span> -->
         </a>
 
