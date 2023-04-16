@@ -3,9 +3,9 @@
         session_start();
     }
 
-    // if (!isset($_SESSION['kh_tendangnhap_logged'])){
-    //     echo '<script>location.href = "/auth/login.php";</script>';
-    // }
+    if (!isset($_SESSION['kh_tendangnhap_logged'])){
+        echo '<script>location.href = "/user/auth/login.php";</script>';
+    }
     require_once '../bootstrap.php';
     
 
