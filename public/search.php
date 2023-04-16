@@ -96,7 +96,7 @@ if (session_id() === '') {
                                 <a href="#" title="Điện thoại">
                                     <h2>
                                         <img src="/assets/user/imgs/phukien.svg" alt="icon">
-                                        <span>Phụ kiện đáng mua nhất</span>
+                                        <span>Sản phẩm đáng mua nhất</span>
                                     </h2>
                                 </a>
                             </div>
