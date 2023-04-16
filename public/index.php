@@ -53,7 +53,16 @@ if (session_id() === '') {
     <link rel="stylesheet" href="/assets/user/css/styles.css" type="text/css" />
     <link rel="stylesheet" href="/assets/user/css/responsive.css" type="text/css" />
     
-    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X5P6910731"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-X5P6910731');
+    </script>
+
 </head>
 <body>
     <!-- Messenger Plugin chat Code -->
@@ -97,7 +106,9 @@ if (session_id() === '') {
 
     <div class="body_container">
         <main role="main " class="mb-2">
-            
+            <a href="#" >
+                <img src="/assets/user/imgs/top.png" class="scroll-top" alt="">
+            </a>
             <div class="col-md-12 col-sm-12 main-column">
                 <div class="slide_banner ">
                     <div class="menu-site">
