@@ -147,19 +147,14 @@ if (session_id() === '') {
                                                     <span class="product-item__sale-off-percent"> -10%</span>
                                                 </div>
                                                 <!-- Nếu có ảnh thì hiển thị -->
-                                                <?php if (!empty($product->hsp_tentaptin)) : ?>
+                                               
                                                     <div class="container-img">
                                                         <a href="detail.php?sp_ma=<?= htmlspecialchars($product->sp_ma) ?>">
-                                                            <img class="bd-placeholder-img card-img-top img-fluid box-effect-img" src="/assets/uploads/<?= htmlspecialchars($product->hsp_tentaptin) ?>" />
+                                                            <img class="bd-placeholder-img card-img-top img-fluid box-effect-img" src="/assets/user/imgs/ingsearch.png" />
                                                         </a>
                                                     </div>
-                                                <?php else : ?>
-                                                    <div class="container-img">
-                                                        <a href="detail.php?sp_ma=<?= htmlspecialchars($product->sp_ma) ?>">
-                                                            <img class="bd-placeholder-img card-img-top img-fluid" src="/assets/shared/img/default-image.png" />
-                                                        </a>
-                                                    </div>
-                                                <?php endif; ?>
+                                            
+                                                
                                             </div>
                                             
                                             <!-- Body -->

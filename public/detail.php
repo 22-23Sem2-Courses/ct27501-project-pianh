@@ -170,7 +170,7 @@
 
                             <div class="form-group">
                                 <label for="soluong">Số lượng đặt mua:</label>
-                                <input type="number" class="form-control" id="soluong" name="soluong" >
+                                <input type="number" min="1" class="form-control" id="soluong" name="soluong" >
                             </div>
 
                             <div class="action">
@@ -313,7 +313,7 @@
                                 
                                 $message = "Bình luận thành công và đang chờ kiểm duyệt!";
                                 echo "<script type='text/javascript'>alert('$message');</script>";
-                                echo '<script>location.href = "/detail.php";</script>';
+                                echo '<script>location.href = "/index.php";</script>';
 
                             }
                             
