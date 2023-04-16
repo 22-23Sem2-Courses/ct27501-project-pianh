@@ -15,39 +15,23 @@
     $kh_tendangnhap=$_SESSION['kh_tendangnhap_logged'];
     // var_dump($kh_tendangnhap); die;
 
-        if ( ($kh_tendangnhap == "") || !($customer->find($kh_tendangnhap))) {
-            redirect(BASE_URL_PATH .'user/auth/login.php');
-        }
-
-        $errors = [];
-        $customer = new Customer($PDO);
-        $customer->fill($_POST);
-        // var_dump($customer);
-    // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
-    if (isset($_POST['btnSubmit']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
-                                
-                                    
-        $kh_tendangnhap=$_SESSION['kh_tendangnhap_logged'];
-        $kh_matkhau = addslashes($_POST['kh_matkhau']);
-        $customerCheck = $customer->checkLogin($kh_tendangnhap, $kh_matkhau);
-        // var_dump( $customerCheck); die;
-        if ($customerCheck == true) {
-            
-            
-
-
-        }
-        else {
+    if ( ($kh_tendangnhap == "") || !($customer->find($kh_tendangnhap))) {
+        redirect(BASE_URL_PATH .'user/auth/login.php');
+    }
+  
+    $errors = [];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // var_dump($customer); die;
+        if ($customer->update($_POST)) {
             echo '<script type="text/javascript">
-            window.onload = function () { alert("Sai mật khẩu!"); }
+            window.onload = function () { alert("Cập nhật mật khẩu mới thành công!"); }
             </script>';
-        }       
-    } 
+            // redirect(BASE_URL_PATH .'user/info/change-password.php');
 
-        
-    
-    
-    
+        } 
+        // Cập nhật dữ liệu không thành công
+        $errors = $customer->getValidationErrors();
+    }    
     
 ?>
 
@@ -152,33 +136,33 @@
                             <?php endif ?>
                         </div> -->
 
-                        <div class="box-user <?= isset($errors['kh_matkhau']) ? ' has-error' : '' ?>">
+                        <div class="box-user <?= isset($errors['kh_matkhaucu']) ? ' has-error' : '' ?>">
                             <label class="label-input" for="password">Mật khẩu cũ</label>
-                            <input type="password" name="kh_matkhau" class="form-control" id="kh_matkhau" placeholder="Mật khẩu" value="" />
+                            <input type="password" name="kh_matkhaucu" class="form-control" id="kh_matkhaucu" placeholder="Mật khẩu" value="<?= isset($_POST['kh_matkhaucu']) ? htmlspecialchars($_POST['kh_matkhaucu']) : '' ?>" />
+
+                            <?php if (isset($errors['kh_matkhaucu'])) : ?>
+                                <span class="help-block">
+                                    <strong><?= htmlspecialchars($errors['kh_matkhaucu']) ?></strong>
+                                </span>
+                            <?php endif ?>
+                        </div>
+
+                        <div class="box-user">
+                            <label class="label-input" for="kh_matkhau">Mật khẩu mới</label>
+                            <input type="password" name="kh_matkhau" class="form-control" id="kh_matkhau" placeholder="Mật khẩu mới" value="<?= isset($_POST['kh_matkhau']) ? htmlspecialchars($_POST['kh_matkhau']) : '' ?>" />
 
                             <?php if (isset($errors['kh_matkhau'])) : ?>
                                 <span class="help-block">
                                     <strong><?= htmlspecialchars($errors['kh_matkhau']) ?></strong>
                                 </span>
                             <?php endif ?>
-                        </div>
-
-                        <div class="box-user">
-                            <label class="label-input" for="kh_matkhaumoi">Mật khẩu mới</label>
-                            <input type="password" name="kh_matkhaumoi" class="form-control" id="kh_matkhaumoi" placeholder="Mật khẩu mới" value="" />
-
-                            <?php if (isset($errors['kh_matkhaumoi'])) : ?>
-                                <span class="help-block">
-                                    <strong><?= htmlspecialchars($errors['kh_matkhaumoi']) ?></strong>
-                                </span>
-                            <?php endif ?>
                         
                         </div>
 
-                        <div class="box-user">
+                        <!-- <div class="box-user">
                             <label class="label-input" for="kh_nhaplaimatkhau">Nhập lại mật khẩu mới</label>
-                            <input type="password" name="kh_nhaplaimatkhau" id="kh_nhaplaimatkhau" value="" placeholder="Nhập lại mật khẩu mới" class="form-control">
-                        </div>
+                            <input type="password" name="re-kh_matkhau" id="kh_nhaplaimatkhau" value="" placeholder="Nhập lại mật khẩu mới" class="form-control">
+                        </div> -->
 
                         <div class="box-user box-submit ">
                             <button class="submit-btn btn btn-success" name="btnSubmit">Cập nhật</button>

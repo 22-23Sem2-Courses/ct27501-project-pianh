@@ -5,7 +5,7 @@
     }
 
     if (!isset($_SESSION['kh_tendangnhap_logged'])){
-        echo '<script>location.href = "user/auth/login.php";</script>';
+        echo '<script>location.href = "/user/auth/login.php";</script>';
     }
     require_once '../../../bootstrap.php';
     
@@ -15,23 +15,45 @@
     $kh_tendangnhap=$_SESSION['kh_tendangnhap_logged'];
     // var_dump($kh_tendangnhap); die;
 
-    if ( ($kh_tendangnhap == "") || !($customer->find($kh_tendangnhap))) {
-        redirect(BASE_URL_PATH .'user/auth/login.php');
-    }
-  
-    $errors = [];
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // var_dump($customer); die;
-        if ($customer->update($_POST)) {
-            echo '<script type="text/javascript">
-            window.onload = function () { alert("Cập nhật thông tin thành công!"); }
-            </script>';
-            //redirect(BASE_URL_PATH .'user/info/personal.php');
+        if ( ($kh_tendangnhap == "") || !($customer->find($kh_tendangnhap))) {
+            redirect(BASE_URL_PATH .'user/auth/login.php');
+        }
 
-        } 
-        // Cập nhật dữ liệu không thành công
-        $errors = $customer->getValidationErrors();
-    }
+        $errors = [];
+        $customer = new Customer($PDO);
+        $customer->fill($_POST);
+        // var_dump($customer);
+    // Chưa đăng nhập -> Xử lý logic/nghiệp vụ kiểm tra Tài khoản và Mật khẩu trong database
+    if (isset($_POST['btnSubmit']) && ($_SERVER['REQUEST_METHOD'] === 'POST') ) {
+                                
+                                    
+        $kh_tendangnhap=$_SESSION['kh_tendangnhap_logged'];
+        $kh_matkhau = addslashes(sha1($_POST['kh_matkhau']));
+        $customerCheck = $customer->checkLogin($kh_tendangnhap, $kh_matkhau);
+        // var_dump( $customerCheck); die;
+        if ($customerCheck == true) {
+            
+            if ($customer->update($_POST)) {
+                echo '<script type="text/javascript">
+                window.onload = function () { alert("Cập nhật thông tin thành công!"); }
+                </script>';
+                //redirect(BASE_URL_PATH .'user/info/personal.php');
+    
+            } 
+
+        }
+        else {
+            echo '<script type="text/javascript">
+            window.onload = function () { alert("Sai mật khẩu!"); }
+            </script>';
+        }       
+    } 
+
+        
+    
+    
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +63,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chỉnh sửa địa chỉ Điện tử Cần Thơ| DientuCanTho.vn</title>
+    <title>Đổi mật khẩu Điện tử Cần Thơ| DientuCanTho.vn</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/user/css/bootstrap.min.css" type="text/css" />
     <!-- Font awesome -->
@@ -81,7 +103,7 @@
                     </div>
 
                     <ul>
-                        <li >
+                        <li>
                            <a href="/user/info/personal.php">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 Thông tin tài khoản
@@ -89,19 +111,19 @@
                         </li>
                         <li>
                             <a href="/user/info/order-management.php">
-                                <i class="fa fa-wpforms" aria-hidden="true"></i>    
+                                <i class="fa fa-wpforms" aria-hidden="true"></i>
                                 Quản lý đơn hàng
                             </a>
                         </li>
-                        <li>
+                        <li class="selected">
                             <a href="/user/info/change-password.php">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
                                 Đổi mật khẩu
                             </a>
                         </li>
-                        <li class="selected">
+                        <li>
                             <a href="/user/info/address.php">
-                            <i class="fa fa-id-card-o" aria-hidden="true"></i>
+                                <i class="fa fa-id-card-o" aria-hidden="true"></i>
                                 Sổ địa chỉ
                             </a>
                         </li>
@@ -120,9 +142,11 @@
             <div class="col-md-7">
                 <!-- Start Content -->
                 <div class="user-content-side">
-                    <h2 class="member-title">Cập nhật địa chỉ</h2>
+                    <h2 class="member-title">Đổi mật khẩu</h2>
                     <form action="" method="post" name="frmUser" id="frmUser" enctype="multipart/form-data">
-                        <div class="box-user <?= isset($errors['kh_ten']) ? ' has-error' : '' ?>">
+                        
+
+                        <!-- <div class="box-user <?= isset($errors['kh_ten']) ? ' has-error' : '' ?>">
                             <label class="label-input" for="Username">Họ và tên</label>
                             <input type="text" name="kh_ten" class="form-control" id="kh_ten" placeholder="Họ tên" value="<?= htmlspecialchars($customer->kh_ten) ?>" />
 
@@ -131,62 +155,56 @@
                                     <strong><?= htmlspecialchars($errors['kh_ten']) ?></strong>
                                 </span>
                             <?php endif ?>
-                        </div>
-
-                        <div class="box-user <?= isset($errors['kh_dienthoai']) ? ' has-error' : '' ?>">
-                            <label class="label-input" for="kh_dienthoai">Điện thoại</label>
-                            <input type="text" name="kh_dienthoai" class="form-control" id="kh_dienthoai" placeholder="Điện thoại" value="<?= htmlspecialchars($customer->kh_dienthoai) ?>" />
-
-                            <?php if (isset($errors['kh_dienthoai'])) : ?>
-                                <span class="help-block">
-                                    <strong><?= htmlspecialchars($errors['kh_dienthoai']) ?></strong>
-                                </span>
-                            <?php endif ?>
-                        </div>
-
-                        <div class="box-user <?= isset($errors['kh_diachi']) ? ' has-error' : '' ?>">
-                            <label class="label-input" for="kh_diachi">Địa chỉ giao hàng</label>
-                            <input type="text" name="kh_diachi" class="form-control" id="kh_diachi" placeholder="Địa chỉ" value="<?= htmlspecialchars($customer->kh_diachi) ?>" />
-
-                            <?php if (isset($errors['kh_diachi'])) : ?>
-                                <span class="help-block">
-                                    <strong><?= htmlspecialchars($errors['kh_diachi']) ?></strong>
-                                </span>
-                            <?php endif ?>
-                        </div>
-
-                        
-
-                        <!-- <div class="box-user">
-                            <label class="label-input" for="district">Quận/ Huyện</label>
-                            <input type="text" name="district" id="district" value="" placeholder="Quận/ Huyện" class="form-control">
-                        </div>
-                        <div class="box-user">
-                            <label class="label-input" for="village">Phường/ Xã</label>
-                            <input type="text" name="village" id="village" value="" placeholder="Phường/ Xã" class="form-control">
-                        </div>
-                        <div class="box-user">
-                            <label class="label-input" for="detail-address">Địa chỉ chi tiết</label>
-                            <input type="text" name="detail-address" id="detail-address" value="" placeholder="Địa chỉ chi tiết" class="form-control">
                         </div> -->
 
+                        <div class="box-user <?= isset($errors['kh_matkhau']) ? ' has-error' : '' ?>">
+                            <label class="label-input" for="password">Mật khẩu cũ</label>
+                            <input type="password" name="kh_matkhau" class="form-control" id="kh_matkhau" placeholder="Mật khẩu" value="" />
+
+                            <?php if (isset($errors['kh_matkhau'])) : ?>
+                                <span class="help-block">
+                                    <strong><?= htmlspecialchars($errors['kh_matkhau']) ?></strong>
+                                </span>
+                            <?php endif ?>
+                        </div>
+
+                        <div class="box-user">
+                            <label class="label-input" for="kh_matkhaumoi">Mật khẩu mới</label>
+                            <input type="password" name="kh_matkhaumoi" class="form-control" id="kh_matkhaumoi" placeholder="Mật khẩu mới" value="" />
+
+                            <?php if (isset($errors['kh_matkhaumoi'])) : ?>
+                                <span class="help-block">
+                                    <strong><?= htmlspecialchars($errors['kh_matkhaumoi']) ?></strong>
+                                </span>
+                            <?php endif ?>
+                        
+                        </div>
+
+                        <div class="box-user">
+                            <label class="label-input" for="kh_nhaplaimatkhau">Nhập lại mật khẩu mới</label>
+                            <input type="password" name="kh_nhaplaimatkhau" id="kh_nhaplaimatkhau" value="" placeholder="Nhập lại mật khẩu mới" class="form-control">
+                        </div>
+
                         <div class="box-user box-submit ">
-                            <button class="submit-btn btn btn-success" name="submit" >Cập nhật</button>
+                            <button class="submit-btn btn btn-success" name="btnSubmit">Cập nhật</button>
                         </div>
                     </form>
                 </div>
                 <!-- End Content -->
             </div>
 
-            
+                    <?php
+                            
+
+                            
+                    ?>
         
         </div>
     </div>
 
     
-
-        <!-- footer -->
-        <?php include_once __DIR__ . '../../../../partials/user/footer.php'; ?>
+    <!-- footer -->
+    <?php include_once __DIR__ . '../../../../partials/user/footer.php'; ?>
     <!-- end footer -->
     <!-- jQuery JS -->
     <script src="/assets/user/js/jquery.min.js"></script>
