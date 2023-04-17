@@ -298,8 +298,8 @@
 
                 <?php
                         
-                        $kh_tendangnhap_logged=htmlspecialchars($_SESSION['kh_tendangnhap_logged']);
                         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                            $kh_tendangnhap_logged=htmlspecialchars($_SESSION['kh_tendangnhap_logged']);
                             if (!isset($kh_tendangnhap_logged) ) {
                                 $message = "Bạn chưa đăng nhập nên không được phép gửi bình luận! Vui lòng đăng nhập!!!";
                                 echo "<script type='text/javascript'>alert('$message');</script>";
